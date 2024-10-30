@@ -1,3 +1,4 @@
+import { Mail, Phone, MapPin } from "lucide-react";
 export const HeaderNav = [
   {
     id: 1,
@@ -6,7 +7,7 @@ export const HeaderNav = [
   },
   {
     id: 2,
-    name: "About us",
+    name: "About",
     path: "about",
   },
   {
@@ -16,8 +17,8 @@ export const HeaderNav = [
   },
   {
     id: 4,
-    name: "Contact",
-    path: "contact",
+    name: "",
+    path: "",
   },
 ];
 
@@ -29,7 +30,7 @@ export const pageLinks = [
   },
   {
     id: 2,
-    text: "About us",
+    text: "About Us",
     path: "about",
   },
   {
@@ -39,25 +40,31 @@ export const pageLinks = [
   },
   {
     id: 4,
-    text: "Contact",
+    text: "Contact Us",
     path: "contact",
+  },
+
+  {
+    id: 6,
+    text: "FAQs",
+    path: "faqs",
   },
 ];
 export const materials = [
   {
     id: 1,
-    text: "",
-    path: "",
+    text: "Privacy Policy",
+    path: "privacypolicy",
   },
   {
     id: 2,
-    text: "",
-    path: "",
+    text: "Terms of Service",
+    path: "termsofservice",
   },
   {
     id: 3,
-    text: "",
-    path: "",
+    text: "Cookie Policy",
+    path: "cookiepolicy",
   },
   {
     id: 4,
@@ -66,3 +73,29 @@ export const materials = [
   },
 ];
 
+export const informations = [
+  {
+    id: 1,
+    text: "webfalainitiative@gmail.com",
+    path: "webfalainitiative@gmail.com",
+    icon: <Mail size={16} className="mr-2" />,
+  },
+  {
+    id: 2,
+    text: "+234 000000000",
+    path: "+234 000000000",
+    icon: <Phone size={16} className="mr-2" />,
+  },
+  {
+    id: 3,
+    text: "12, Station Road, G.R.A, Ilorin.",
+    path: "address",
+    icon: <MapPin size={16} className="mr-2" />,
+  },
+  {
+    id: 4,
+    text: "",
+    path: "",
+    icon: null,
+  },
+];

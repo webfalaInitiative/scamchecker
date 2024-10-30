@@ -1,28 +1,16 @@
 import React from "react";
-import { materials, pageLinks } from "../utils/constant";
+import {  informations, materials, pageLinks } from "../utils/constant";
 import { Link, NavLink } from "react-router-dom";
-const whiteLogo = "/public/images/webfala LOGO 1.png";
+
 
 const Footer = () => {
   return (
-    <div className="text-white px-6 md:px-mid bg-primary py-mid">
-      <div className="md:grid grid-cols-2">
-        <div className="flex flex-col gap-12">
-          <div>
-            <img className="w-[150px] mb-10 h-fit" src={whiteLogo} alt="Logo" />
-            <p className="text-[18px]">
-              Our scam checker utilizes cutting-edge technology and algorithms
-              to thoroughly examine potential scams
-            </p>
-          </div>
-          <p className="text-[18px] ">
-            No 14. Station Road, G.R.A, Ilorin, Kwara, Nigeria.
-          </p>
-          <div></div>
-        </div>
-        <div className="flex text-[18px] md:px-20 flex-col gap-12">
-          <div className="md:flex gap-12">
-            <div className="flex head flex-col gap-5">
+    <div className="text-white px-6 md:px-mid bg-[#E63946] py-mid">
+      <div className="">
+        <div className="flex text-[18px] md:px-20 flex-col py-8 ">
+          <div className="md:flex justify-between ">
+            <div className="flex flex-col gap-5">
+              <h1 className="font-bold text-lg mb-4">QuickLinks</h1>
               {pageLinks.map((link) => (
                 <NavLink
                   className="whitespace-nowrap"
@@ -34,6 +22,7 @@ const Footer = () => {
               ))}
             </div>
             <div className="flex flex-col gap-5">
+              <h1 className="font-bold text-lg mb-4">Legal Info</h1>
               {materials.map((material) => (
                 <Link
                   className="whitespace-nowrap"
@@ -44,29 +33,60 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-          </div>
-          <div>
-            {/* <form
-              className="flex relative"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                placeholder="Subscribe to our Newsletter"
-                className="w-full outline-none pl-5 pr-32 text-sm text-black rounded-md h-[35px]"
-                type="text"
-              />
-              <button className="bg-gold absolute right-0 top-0 h-[35px] rounded-md px-4">
-                Subscribe
-              </button>
-            </form> */}
+            <div className="flex flex-col gap-5">
+              <h1 className="font-bold text-lg mb-4">Contact Info</h1>
+              {informations.map((information) => (
+                <Link
+                  className="whitespace-nowrap flex items-center gap-2" 
+                  key={information.id}
+                  to={information.path}
+                >
+                  {information.icon} 
+                  {information.text}
+                </Link>
+              ))}
+            </div>
+            <div className="md:flex flex-col gap-6">
+              <h1 className="text-3xl">Subscribe</h1>
+              <form
+                className="flex relative"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <input
+                  placeholder=""
+                  className="w-full outline-none pl-5 pr-32 text-sm text-black rounded-md h-[35px]"
+                  type="text"
+                />
+                <button className="bg-[#929292] absolute right-0 top-0 h-[35px] rounded-r px-4">
+                  <img src="../public/images/Path.png" alt="" />
+                </button>
+              </form>
+              <span>© 2024 PhishGuard. All rights reserved.</span>
+            </div>
           </div>
         </div>
       </div>
       <hr />
-      <div className="md:flex justify-between">
-        <div></div>
-        <div></div>
-        <div></div>
+      <div className="md:flex justify-between p-8">
+        <img src="../images/footer.png" alt="" />
+        <div className="flex gap-4 ">
+          <span className="text-sm">Terms</span>
+          <span className="text-sm">Privacy</span>
+          <span>
+            <img className="h-2 w-2 mt-2" src="../images/Cookies.png" alt="" />
+          </span>
+        </div>
+        <div className="flex gap-1">
+          <a href="">
+            <img src="../images/Linkedin.png" alt="" />
+          </a>
+          <a href="">
+            <img src="../images/Facebook.png" alt="" />
+          </a>
+          <a href="">
+            <img src="../images/Twitter.png" alt="" />
+          </a>
+        </div>
       </div>
     </div>
   );
