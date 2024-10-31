@@ -9,8 +9,8 @@ const Footer = () => {
       <div className="">
         <div className="flex text-[18px] md:px-20 flex-col py-8 ">
           <div className="md:flex justify-between ">
-            <div className="flex flex-col gap-5">
-              <h1 className="font-bold text-lg mb-4">QuickLinks</h1>
+            <div className="flex flex-col gap-3 mb-3">
+              <h1 className="font-bold text-lg ">QuickLinks</h1>
               {pageLinks.map((link) => (
                 <NavLink
                   className="whitespace-nowrap"
@@ -21,8 +21,8 @@ const Footer = () => {
                 </NavLink>
               ))}
             </div>
-            <div className="flex flex-col gap-5">
-              <h1 className="font-bold text-lg mb-4">Legal Info</h1>
+            <div className="flex flex-col gap-3">
+              <h1 className="font-bold text-lg ">Legal Info</h1>
               {materials.map((material) => (
                 <Link
                   className="whitespace-nowrap"
@@ -33,21 +33,21 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-            <div className="flex flex-col gap-5">
-              <h1 className="font-bold text-lg mb-4">Contact Info</h1>
+            <div className="flex flex-col gap-3">
+              <h1 className="font-bold text-lg ">Contact Info</h1>
               {informations.map((information) => (
                 <Link
-                  className="whitespace-nowrap flex items-center gap-2" 
+                  className="whitespace-nowrap flex items-center gap-2"
                   key={information.id}
                   to={information.path}
                 >
-                  {information.icon} 
+                  {information.icon}
                   {information.text}
                 </Link>
               ))}
             </div>
             <div className="md:flex flex-col gap-6">
-              <h1 className="text-3xl">Subscribe</h1>
+              <h1 className="font-bold text-lg mb-2">Subscribe</h1>
               <form
                 className="flex relative"
                 onSubmit={(e) => e.preventDefault()}
@@ -67,8 +67,12 @@ const Footer = () => {
         </div>
       </div>
       <hr />
-      <div className="md:flex justify-between p-8">
-        <img src="../images/footer.png" alt="" />
+      <div className="md:flex justify-between p-8 ">
+        <img
+          src="../images/nav.png"
+          alt=""
+          className="md:w-[150px] w-[80px] h-[100px] md:h-[200px]"
+        />
         <div className="flex gap-4 ">
           <span className="text-sm">Terms</span>
           <span className="text-sm">Privacy</span>

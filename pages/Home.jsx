@@ -42,7 +42,7 @@ const Home = () => {
           <CheckURL />
         </div>
         <div className="flex flex-col gap-12">
-          <h1 className=" text-center text-5xl text-[#1B263B]">How It Works</h1>
+          <h1 className=" text-center text-3xl font-bold text-[#1B263B]">How It Works</h1>
           <VideoPlayer />
         </div>
       </div>

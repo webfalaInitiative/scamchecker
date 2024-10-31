@@ -97,9 +97,9 @@ const Header = () => {
         <img className="w-[150px] my-auto h-fit" src={logo} alt="Logo" />
       </Link>
       <div
-        className={`flex items-center md:flex-row flex-col ${
+        className={`flex gap-3 md:flex-row flex-col ${
           showNav
-            ? "absolute top-16 left-0 bg-primary text-white w-full p-6"
+            ? "absolute top-5 left-0 bg-[#E63946] text-white w-full p-6"
             : "hidden md:flex"
         }`}
       >
@@ -116,7 +116,7 @@ const Header = () => {
         <div className="relative mx-2 flex">
           <img
             src="/images/Vector.png"
-            className="h-4 w-4 mr-1 pointer-events-none"
+            className="h-4 w-4 mr-1 mt-1 pointer-events-none"
             alt="Translation Icon"
           />
           <select
