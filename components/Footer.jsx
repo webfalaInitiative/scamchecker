@@ -58,7 +58,7 @@ const Footer = () => {
                   type="text"
                 />
                 <button className="bg-[#929292] absolute right-0 top-0 h-[35px] rounded-r px-4">
-                  <img src="../public/images/Path.png" alt="" />
+                  <img src="/images/Path.png" alt="" />
                 </button>
               </form>
               <span>© 2024 PhishGuard. All rights reserved.</span>

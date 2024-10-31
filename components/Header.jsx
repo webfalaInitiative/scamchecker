@@ -94,7 +94,7 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between shadow-sm sticky md:top-0 z-50 bg-white py-4 px-10">
       <Link to="/">
-        <img className="w-[150px] my-auto h-fit" src={logo} alt="Logo" />
+        <img className="md:w-[15%] w-[40%] my-auto h-fit" src={logo} alt="Logo" />
       </Link>
       <div
         className={`flex gap-3 md:flex-row flex-col ${
