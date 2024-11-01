@@ -67,11 +67,11 @@ const Footer = () => {
         </div>
       </div>
       <hr />
-      <div className="md:flex justify-between p-8 ">
+      <div className="flex flex-col md:flex-row md:justify-between items-center p-8 space-y-4 md:space-y-0 ">
         <img
           src="../images/nav.png"
           alt=""
-          className="md:w-[150px] w-[80px] h-[100px] md:h-[200px]"
+          className="w-[80px] h-[100px] md:w-[150px] md:h-[200px]"
         />
         <div className="flex gap-4 ">
           <span className="text-sm">Terms</span>
