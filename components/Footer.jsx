@@ -67,28 +67,44 @@ const Footer = () => {
         </div>
       </div>
       <hr />
-      <div className="md:flex justify-between p-8 ">
+      <div className="flex flex-col md:flex-row md:justify-between items-center p-8 space-y-4 md:space-y-0">
         <img
           src="../images/nav.png"
           alt=""
-          className="md:w-[150px] w-[80px] h-[100px] md:h-[200px]"
+          className="w-[80px] h-[100px] md:w-[150px] md:h-[200px]"
         />
-        <div className="flex gap-4 ">
+        <div className="flex gap-4 text-white">
           <span className="text-sm">Terms</span>
           <span className="text-sm">Privacy</span>
           <span>
-            <img className="h-2 w-2 mt-2" src="../images/Cookies.png" alt="" />
+            <img
+              className="h-3 w-3 mt-1"
+              src="../images/Cookies.png"
+              alt="Cookies"
+            />
           </span>
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-4">
           <a href="">
-            <img src="../images/Linkedin.png" alt="" />
+            <img
+              className="w-6 h-6"
+              src="../images/Linkedin.png"
+              alt="LinkedIn"
+            />
           </a>
           <a href="">
-            <img src="../images/Facebook.png" alt="" />
+            <img
+              className="w-6 h-6"
+              src="../images/Facebook.png"
+              alt="Facebook"
+            />
           </a>
           <a href="">
-            <img src="../images/Twitter.png" alt="" />
+            <img
+              className="w-6 h-6"
+              src="../images/Twitter.png"
+              alt="Twitter"
+            />
           </a>
         </div>
       </div>
