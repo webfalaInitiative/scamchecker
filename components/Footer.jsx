@@ -71,7 +71,7 @@ const Footer = () => {
         <img
           src="../images/nav.png"
           alt=""
-          className="w-[80px] h-[100px] md:w-[150px] md:h-[200px]"
+          className="w-[80px] h-[100px] md:w-[100px] md:h-[150px]"
         />
         <div className="flex gap-4 ">
           <span className="text-sm">Terms</span>
@@ -81,14 +81,17 @@ const Footer = () => {
           </span>
         </div>
         <div className="flex gap-1">
-          <a href="">
+          <a href="https://www.linkedin.com/company/link-guard/">
             <img src="../images/Linkedin.png" alt="" />
           </a>
-          <a href="">
+          <a href="https://www.facebook.com/profile.php?id=61565890179986&mibextid=ZbWKwL">
             <img src="../images/Facebook.png" alt="" />
           </a>
-          <a href="">
-            <img src="../images/Twitter.png" alt="" />
+          <a href="https://www.instagram.com/linkguard/profilecard/?igsh=dGxlcW5vdmNweTNr">
+            <img src="../images/Instagram.png" alt="" />
+          </a>
+          <a href="https://x.com/LinkGuard1?t=FWxT5L1LQNxGpTNNE7Npfg&s=09">
+            <img src="../images/Twitter (2).png" alt="" />
           </a>
         </div>
       </div>

@@ -95,7 +95,7 @@ const Header = () => {
     <div className="flex items-center justify-between shadow-sm sticky md:top-0 z-10 bg-white py-4 px-10">
       <Link to="/">
         <img
-          className="w-28 sm:w-36 md:w-40 my-auto h-auto"
+          className="w-24 sm:w-40 md:w-36 my-auto h-auto"
           src={logo}
           alt="Logo"
         />
