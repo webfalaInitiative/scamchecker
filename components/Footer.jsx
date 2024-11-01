@@ -87,7 +87,7 @@ const Footer = () => {
           <a href="https://www.facebook.com/profile.php?id=61565890179986&mibextid=ZbWKwL">
             <img src="../images/Facebook.png" alt="" />
           </a>
-          <a href="https://www.instagram.com/linkguard/profilecard/?igsh=dGxlcW5vdmNweTNr">
+          <a href="https://www.instagram.com/_linkguard_?igsh=MWM4ZHh1MWgzcWo0eg==">
             <img src="../images/Instagram.png" alt="" />
           </a>
           <a href="https://x.com/LinkGuard1?t=FWxT5L1LQNxGpTNNE7Npfg&s=09">
