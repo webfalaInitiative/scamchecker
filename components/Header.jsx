@@ -39,7 +39,7 @@
 //         to="report"
 //         className="py-2 h-fit w-fit text-small md:flex hidden rounded-md px-4 bg-primary text-white"
 //       >
-        
+
 //       </Link> */}
 //       <div className="relative">
 //         <div className="flex items-center border-0 p-2">
@@ -92,10 +92,15 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center justify-between shadow-sm sticky md:top-0 z-50 bg-white py-4 px-10">
+    <div className="flex items-center justify-between shadow-sm sticky md:top-0 z-10 bg-white py-4 px-10">
       <Link to="/">
-        <img className="md:w-[15%] w-[40%] my-auto h-fit" src={logo} alt="Logo" />
+        <img
+          className="w-28 sm:w-36 md:w-40 my-auto h-auto"
+          src={logo}
+          alt="Logo"
+        />
       </Link>
+
       <div
         className={`flex gap-3 md:flex-row flex-col ${
           showNav
