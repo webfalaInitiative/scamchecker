@@ -58,13 +58,9 @@ const CheckURL = () => {
           <div className="flex gap-4 justify-center items-center mt-8">
             <input type="checkbox" name="" id="" />
           
-            <span className="md:text-base text-start">
+            <span className="text-justify">
               By submitting a URL, you agree to our Terms of Service and
-              Privacy Policy. <br />
-              Your URL submission may be shared with the security community
-              to enhance threat detection. <br />
-              Please avoid submitting any personal information, as we are not
-              responsible for the contents of your submission.
+              Privacy Policy. Your URL submission may be shared with the security community to enhance threat detection.Please avoid submitting any personal information, as we are not responsible for the contents of your submission.
             </span>
             
           </div>

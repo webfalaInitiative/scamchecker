@@ -32,7 +32,7 @@ const About = () => {
               alt=""
               className="h-32 w-32 md:h-1/2 md:w-1/2"
             />
-            <div className="flex flex-col text-center">
+            <div className="flex flex-col md:text-justify text-center">
               <h1 className="font-bold text-2xl">Scam Reporting Tool</h1>
               <p className="font-light text-gray-500 mb-4 max-w-xs mx-auto">
                 A built-in reporting tool enables users to report suspicious
@@ -42,7 +42,7 @@ const About = () => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-            <div className="flex flex-col text-center order-1 md:order-1">
+            <div className="flex flex-col md:text-justify text-center order-1 md:order-1">
               <h1 className="font-bold text-2xl">Real-Time Monitoring</h1>
               <p className="font-light text-gray-500 mb-4 max-w-xs mx-auto">
                 The platform offers continuous, real-time monitoring of URLs to
@@ -62,7 +62,7 @@ const About = () => {
               alt=""
               className="h-32 w-32 md:h-1/2 md:w-1/2"
             />
-            <div className="flex flex-col text-center">
+            <div className="flex flex-col md:text-justify text-center">
               <h1 className="font-bold text-2xl">User-Friendly Interface</h1>
               <p className="font-light text-gray-500 mb-4 max-w-xs mx-auto">
                 Designed with simplicity in mind, LinkGuard’s interface is
