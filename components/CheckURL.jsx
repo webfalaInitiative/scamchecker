@@ -56,7 +56,7 @@ const CheckURL = () => {
             className="flex-grow border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1B263B] resize-none"
           ></textarea>
           <div className="flex gap-4 justify-center items-center mt-8">
-            <input type="checkbox" name="" id="" />
+            <input type="checkbox" name="" id="" required/>
           
             <span className="text-justify">
               By submitting a URL, you agree to our Terms of Service and
