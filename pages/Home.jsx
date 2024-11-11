@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import VideoPlayer from "../components/Video";
 import CheckURL from "../components/CheckURL";
 
+
 const Home = () => {
     return (
       <div className="md:py-6 py-3">
@@ -45,6 +46,7 @@ const Home = () => {
           <h1 className=" text-center text-3xl font-bold text-[#1B263B]">How It Works</h1>
           <VideoPlayer />
         </div>
+        
       </div>
     );
 };
