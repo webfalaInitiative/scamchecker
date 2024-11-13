@@ -105,10 +105,12 @@ const CheckURL = () => {
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-6">
       {/* Main Card */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex items-center gap-2 mb-6">
+      <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
+        <div className="flex flex-col sm:flex-row items-center gap-2 mb-6">
           <Shield className="h-6 w-6 text-blue-600" />
-          <h1 className="text-2xl font-bold text-gray-800">URL Safety Checker</h1>
+          <h1 className="text-2xl sm:text-xl font-bold text-gray-800">
+            URL Safety Checker
+          </h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -120,10 +122,11 @@ const CheckURL = () => {
                 onChange={handleInputChange}
                 placeholder="Enter a URL to analyze (e.g., example.com)"
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent ${
-                  isValid 
-                    ? 'border-green-300 focus:ring-green-500' 
-                    : 'border-gray-300 focus:ring-blue-500'
+                  isValid
+                    ? "border-green-300 focus:ring-green-500"
+                    : "border-gray-300 focus:ring-blue-500"
                 }`}
+                style={{ minWidth: "0" }} // Ensures it shrinks with smaller screens
               />
               {url && (
                 <div className="absolute right-3 top-2.5">
@@ -138,9 +141,11 @@ const CheckURL = () => {
 
             {/* Validation Message */}
             {validationMessage && (
-              <div className={`flex items-center gap-2 text-sm ${
-                isValid ? 'text-green-600' : 'text-yellow-600'
-              }`}>
+              <div
+                className={`flex items-center gap-2 text-sm ${
+                  isValid ? "text-green-600" : "text-yellow-600"
+                }`}
+              >
                 {isValid ? (
                   <CheckCircle className="h-4 w-4" />
                 ) : (
@@ -156,83 +161,87 @@ const CheckURL = () => {
             disabled={loading || !isValid}
             className={`w-full px-6 py-2 rounded-lg font-medium text-white transition-colors ${
               loading || !isValid
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-blue-600 hover:bg-blue-700'
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
-            {loading ? 'Analyzing...' : 'Analyze'}
+            {loading ? "Analyzing..." : "Check URL"}
           </button>
         </form>
       </div>
-
-      {/* Error Message */}
-      {error && (
-        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg flex items-center gap-2">
-          <AlertCircle className="h-5 w-5 text-red-500" />
-          <p className="text-red-700">{error}</p>
-          <button 
-            onClick={() => setError(null)}
-            className="ml-auto"
-          >
-            <X className="h-5 w-5 text-red-500 hover:text-red-700" />
-          </button>
-        </div>
-      )}
 
       {/* Results */}
       {result && (
         <div className="space-y-6">
           {/* Main Results Card */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Analysis Results</h2>
-            
+          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
+            <h2 className="text-xl sm:text-lg font-bold text-gray-800 mb-4">
+              Analysis Results
+            </h2>
+
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
                 <span className="font-medium text-gray-700">Analyzed URL:</span>
-                <span className="font-mono text-gray-600">{result.url}</span>
+                <span className="font-mono text-gray-600 truncate overflow-hidden w-48 sm:w-auto">
+                  {result.url}
+                </span>
               </div>
 
               <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
                 <span className="font-medium text-gray-700">Risk Score:</span>
-                <span className={`text-2xl font-bold ${getRiskColor(result.risk_score)}`}>
+                <span
+                  className={`text-2xl font-bold ${getRiskColor(
+                    result.risk_score
+                  )}`}
+                >
                   {result.risk_score}
                 </span>
               </div>
 
               <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
-                <span className="font-medium text-gray-700">Classification:</span>
-                <span className={`px-4 py-1 rounded-full font-medium ${
-                  result.risk_classification === 'good' 
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {result.risk_classification.charAt(0).toUpperCase() + 
-                   result.risk_classification.slice(1)}
+                <span className="font-medium text-gray-700">
+                  Classification:
+                </span>
+                <span
+                  className={`px-4 py-1 rounded-full font-medium ${
+                    result.risk_classification === "good"
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {result.risk_classification.charAt(0).toUpperCase() +
+                    result.risk_classification.slice(1)}
                 </span>
               </div>
             </div>
           </div>
 
           {/* Features Card */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Detailed Features</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
+            <h2 className="text-xl sm:text-lg font-bold text-gray-800 mb-4">
+              Detailed Features
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {Object.entries(result.features).map(([key, value]) => (
-                <div key={key} 
-                  className="bg-gray-50 p-3 rounded-lg flex items-center justify-between">
+                <div
+                  key={key}
+                  className="bg-gray-50 p-3 rounded-lg flex items-center justify-between"
+                >
                   <span className="font-medium text-gray-700 capitalize">
-                    {key.replace(/_/g, ' ')}:
+                    {key.replace(/_/g, " ")}:
                   </span>
                   <span className="flex items-center gap-2">
-                    {typeof value === 'boolean' ? (
+                    {typeof value === "boolean" ? (
                       value ? (
                         <CheckCircle className="h-5 w-5 text-green-500" />
                       ) : (
                         <X className="h-5 w-5 text-red-500" />
                       )
                     ) : (
-                      <span className="font-mono text-gray-600">{value}</span>
+                      <span className="font-mono text-gray-600 truncate">
+                        {value}
+                      </span>
                     )}
                   </span>
                 </div>
