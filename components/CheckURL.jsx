@@ -13,17 +13,15 @@ const CheckURL = () => {
   const validateURL = (input) => {
     try {
       
-      const urlPattern = new RegExp(
+      const flexibleUrlPattern = new RegExp(
         "^(https?:\\/\\/)?" + // protocol
-          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-          "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-          "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-          "(\\#[-a-z\\d_]*)?$", // fragment locator
+          "(([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name 
+          "((\\d{1,3}\\.){3}\\d{1,3})" + // OR IP (v4) address
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // optional port and path
+          "(\\?[;&a-z\\d%_.~+=-]*)?" + // optional query string
+          "(\\#[-a-z\\d_]*)?$", // optional fragment locator
         "i"
       );
-
-      const domainPattern = /\.(com|org|net|gov|edu|io|co|uk|ng)$/i;
 
       if (!input) {
         setValidationMessage("Please enter a URL");
@@ -31,15 +29,14 @@ const CheckURL = () => {
         return false;
       }
 
-      if (!urlPattern.test(input) || !domainPattern.test(input)) {
-        setValidationMessage(
-          "Please enter a valid URL with a proper domain extension (e.g., https://example.com)"
-        );
+      // Check URL against flexible pattern
+      if (!flexibleUrlPattern.test(input)) {
+        setValidationMessage("Please enter a valid URL format.");
         setIsValid(false);
         return false;
       }
 
-      // Check if protocol is specified
+      // Add "https://" if missing to ensure proper analysis
       if (!input.startsWith("http://") && !input.startsWith("https://")) {
         setValidationMessage('Adding "https://" to ensure proper analysis');
         input = "https://" + input;

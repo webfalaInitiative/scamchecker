@@ -2,11 +2,6 @@
 import React from "react";
 import { ShieldCheck, ShieldAlert } from "lucide-react";
 
-// const ResultCard = ({ result }) => {
-//   const isSafe = result?.predicted_label?.toLowerCase() === "good"; // Use optional chaining
-//   const confidenceScore = result?.confidence_score ? result.confidence_score.toFixed(2) : "N/A";
-  // const isSafe = result.predicted_label.toLowerCase() === "good";
-  // const confidenceScore = result.confidence_score.toFixed(2);
 
 const ResultCard = ({ result }) => {
   if (!result) return null; // Handle case where result is undefined
