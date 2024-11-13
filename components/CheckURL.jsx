@@ -9,43 +9,48 @@ const CheckURL = () => {
   const [validationMessage, setValidationMessage] = useState('');
   const [isValid, setIsValid] = useState(false);
 
+  
   const validateURL = (input) => {
     try {
-      // Basic URL structure check
+      // Updated URL structure check with domain extensions
       const urlPattern = new RegExp(
-        '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$', // fragment locator
-        'i'
+        "^(https?:\\/\\/)?" + // protocol
+          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+          "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+          "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$", // fragment locator
+        "i"
       );
 
+      const domainPattern = /\.(com|org|net|gov|edu|io|co|uk|ng)$/i;
+
       if (!input) {
-        setValidationMessage('Please enter a URL');
+        setValidationMessage("Please enter a URL");
         setIsValid(false);
         return false;
       }
 
-      if (!urlPattern.test(input)) {
-        setValidationMessage('Please enter a valid URL (e.g., https://example.com)');
+      if (!urlPattern.test(input) || !domainPattern.test(input)) {
+        setValidationMessage(
+          "Please enter a valid URL with a proper domain extension (e.g., https://example.com)"
+        );
         setIsValid(false);
         return false;
       }
 
       // Check if protocol is specified
-      if (!input.startsWith('http://') && !input.startsWith('https://')) {
+      if (!input.startsWith("http://") && !input.startsWith("https://")) {
         setValidationMessage('Adding "https://" to ensure proper analysis');
-        input = 'https://' + input;
+        input = "https://" + input;
       } else {
-        setValidationMessage('URL format is valid');
+        setValidationMessage("URL format is valid");
       }
 
       setIsValid(true);
       return true;
     } catch (e) {
-      setValidationMessage('Invalid URL format');
+      setValidationMessage("Invalid URL format");
       setIsValid(false);
       return false;
     }
