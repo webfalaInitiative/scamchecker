@@ -69,7 +69,7 @@ const Footer = () => {
       <hr />
       <div className="flex flex-col md:flex-row md:justify-between items-center p-8 space-y-4 md:space-y-0 ">
         <img
-          src="../images/footerlogoo.jpg"
+          src="../images/logofooter.jpg"
           alt=""
           className="w-[130.03px] h-[100.43px]"
         />
