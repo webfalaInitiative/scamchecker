@@ -106,9 +106,9 @@ const CheckURL = () => {
     <div className="max-w-3xl mx-auto p-4 space-y-6">
       {/* Main Card */}
       <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
-        <div className="flex flex-col sm:flex-row items-center gap-2 mb-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-6">
           <Shield className="h-6 w-6 text-blue-600" />
-          <h1 className="text-2xl sm:text-xl font-bold text-gray-800">
+          <h1 className="text-2xl sm:text-xl  font-bold text-gray-800">
             URL Safety Checker
           </h1>
         </div>
@@ -129,8 +129,7 @@ const CheckURL = () => {
                     : "border-gray-300 focus:ring-blue-500"
                 }`}
                 style={{ minWidth: "0" }} // Ensures it shrinks with smaller screens
-              >
-              </textarea>
+              ></textarea>
               {url && (
                 <div className="absolute right-3 top-2.5">
                   {isValid ? (
@@ -164,7 +163,7 @@ const CheckURL = () => {
             disabled={loading || !isValid}
             className={`w-full px-6 py-2 rounded-lg font-medium text-white transition-colors ${
               loading || !isValid
-                ? "bg-gray-400 cursor-not-allowed"
+                ? "bg-[#1B263B] cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
