@@ -1,107 +1,246 @@
-
-
-
-import React from "react";
-import { useAppContext } from "../src/AppContext";
-import ResultCard from "./ResultCard";
-import { Loader2 } from "lucide-react";
+import React, { useState } from 'react';
+import { AlertCircle, CheckCircle, Shield, X, AlertTriangle } from 'lucide-react';
 
 const CheckURL = () => {
-  const { state, dispatch } = useAppContext();
+  const [url, setUrl] = useState('');
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [validationMessage, setValidationMessage] = useState('');
+  const [isValid, setIsValid] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch({ type: "SET_LOADING", payload: true });
-    dispatch({ type: "SET_ERROR", payload: null });
-
-    console.log("Submitting URL:", state.url); // Log the URL being submitted
-
+  const validateURL = (input) => {
     try {
-      const response = await fetch(
-        "https://phishing-url-detection-api-with-enhanced.onrender.com/analyze",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ url: state.url }),
-        }
+      // Basic URL structure check
+      const urlPattern = new RegExp(
+        '^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', // fragment locator
+        'i'
       );
 
-      console.log("API response status:", response.status); // Log the status of the API response
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
+      if (!input) {
+        setValidationMessage('Please enter a URL');
+        setIsValid(false);
+        return false;
       }
 
-      const data = await response.json();
-      console.log("API response data:", data); // Log the JSON data returned from the API
+      if (!urlPattern.test(input)) {
+        setValidationMessage('Please enter a valid URL (e.g., https://example.com)');
+        setIsValid(false);
+        return false;
+      }
 
-      // Assuming the API returns a JSON object compatible with ResultCard props
-      dispatch({ type: "SET_RESULT", payload: data });
-    } catch (error) {
-      console.error("Error while fetching data:", error); // Log the error if something goes wrong
-      dispatch({
-        type: "SET_ERROR",
-        payload: "An error occurred while checking the URL. Please try again.",
-      });
-    } finally {
-      dispatch({ type: "SET_LOADING", payload: false });
+      // Check if protocol is specified
+      if (!input.startsWith('http://') && !input.startsWith('https://')) {
+        setValidationMessage('Adding "https://" to ensure proper analysis');
+        input = 'https://' + input;
+      } else {
+        setValidationMessage('URL format is valid');
+      }
+
+      setIsValid(true);
+      return true;
+    } catch (e) {
+      setValidationMessage('Invalid URL format');
+      setIsValid(false);
+      return false;
     }
   };
 
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    setUrl(input);
+    validateURL(input);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateURL(url)) {
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const finalUrl = (!url.startsWith('http://') && !url.startsWith('https://')) 
+        ? `https://${url}` 
+        : url;
+
+      const response = await fetch('https://phishing-url-detection-api-with-enhanced.onrender.com/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: finalUrl }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail);
+      }
+
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      setResult(null);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getRiskColor = (score) => {
+    const percentage = parseFloat(score);
+    if (percentage < 30) return 'text-green-500';
+    if (percentage < 70) return 'text-yellow-500';
+    return 'text-red-500';
+  };
+
   return (
-    <div className="container mx-auto my-8 px-4 max-w-2xl">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        Check URL Safety
-      </h1>
-      <form onSubmit={handleSubmit} className="mb-8">
-        <div className="flex flex-col md:flex-col gap-2 ">
-          <textarea
-            type="text"
-            cols="100"
-            rows="5"
-            value={state.url}
-            onChange={(e) =>
-              dispatch({ type: "SET_URL", payload: e.target.value })
-            }
-            placeholder="Please paste your link here"
-            className="flex-grow border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1B263B] resize-none"
-          ></textarea>
-          <div className="flex gap-4 justify-center items-center mt-8">
-            <input type="checkbox" required />
-            <span className="text-justify">
-              By submitting a URL, you agree to our Terms of Service and Privacy
-              Policy. Your URL submission may be shared with the security
-              community to enhance threat detection. Please avoid submitting any
-              personal information, as we are not responsible for the contents
-              of your submission.
-            </span>
-          </div>
-          <div className="flex justify-center items-center">
-            <button
-              type="submit"
-              className="bg-[#1B263B] text-white h-14 w-40 rounded-md hover:bg-[#1B263B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-              disabled={state.isLoading}
-            >
-              {state.isLoading ? (
-                <Loader2 className="animate-spin h-5 w-5 mr-2" />
-              ) : (
-                "Check URL"
-              )}
-            </button>
-          </div>
+    <div className="max-w-3xl mx-auto p-4 space-y-6">
+      {/* Main Card */}
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="flex items-center gap-2 mb-6">
+          <Shield className="h-6 w-6 text-blue-600" />
+          <h1 className="text-2xl font-bold text-gray-800">URL Safety Checker</h1>
         </div>
-      </form>
-      {state.error && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-4"
-          role="alert"
-        >
-          <strong className="font-bold mr-1">Error:</strong>
-          <span className="block sm:inline">{state.error}</span>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <div className="relative">
+              <input
+                type="text"
+                value={url}
+                onChange={handleInputChange}
+                placeholder="Enter a URL to analyze (e.g., example.com)"
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent ${
+                  isValid 
+                    ? 'border-green-300 focus:ring-green-500' 
+                    : 'border-gray-300 focus:ring-blue-500'
+                }`}
+              />
+              {url && (
+                <div className="absolute right-3 top-2.5">
+                  {isValid ? (
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                  ) : (
+                    <AlertTriangle className="h-5 w-5 text-yellow-500" />
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Validation Message */}
+            {validationMessage && (
+              <div className={`flex items-center gap-2 text-sm ${
+                isValid ? 'text-green-600' : 'text-yellow-600'
+              }`}>
+                {isValid ? (
+                  <CheckCircle className="h-4 w-4" />
+                ) : (
+                  <AlertTriangle className="h-4 w-4" />
+                )}
+                {validationMessage}
+              </div>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || !isValid}
+            className={`w-full px-6 py-2 rounded-lg font-medium text-white transition-colors ${
+              loading || !isValid
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+          >
+            {loading ? 'Analyzing...' : 'Analyze'}
+          </button>
+        </form>
+      </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg flex items-center gap-2">
+          <AlertCircle className="h-5 w-5 text-red-500" />
+          <p className="text-red-700">{error}</p>
+          <button 
+            onClick={() => setError(null)}
+            className="ml-auto"
+          >
+            <X className="h-5 w-5 text-red-500 hover:text-red-700" />
+          </button>
         </div>
       )}
-      {state.result && <ResultCard result={state.result} />}
+
+      {/* Results */}
+      {result && (
+        <div className="space-y-6">
+          {/* Main Results Card */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Analysis Results</h2>
+            
+            <div className="space-y-4">
+              <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
+                <span className="font-medium text-gray-700">Analyzed URL:</span>
+                <span className="font-mono text-gray-600">{result.url}</span>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
+                <span className="font-medium text-gray-700">Risk Score:</span>
+                <span className={`text-2xl font-bold ${getRiskColor(result.risk_score)}`}>
+                  {result.risk_score}
+                </span>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
+                <span className="font-medium text-gray-700">Classification:</span>
+                <span className={`px-4 py-1 rounded-full font-medium ${
+                  result.risk_classification === 'good' 
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                }`}>
+                  {result.risk_classification.charAt(0).toUpperCase() + 
+                   result.risk_classification.slice(1)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Features Card */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Detailed Features</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(result.features).map(([key, value]) => (
+                <div key={key} 
+                  className="bg-gray-50 p-3 rounded-lg flex items-center justify-between">
+                  <span className="font-medium text-gray-700 capitalize">
+                    {key.replace(/_/g, ' ')}:
+                  </span>
+                  <span className="flex items-center gap-2">
+                    {typeof value === 'boolean' ? (
+                      value ? (
+                        <CheckCircle className="h-5 w-5 text-green-500" />
+                      ) : (
+                        <X className="h-5 w-5 text-red-500" />
+                      )
+                    ) : (
+                      <span className="font-mono text-gray-600">{value}</span>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
