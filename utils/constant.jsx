@@ -82,8 +82,8 @@ export const informations = [
   },
   {
     id: 2,
-    text: "+234 000000000",
-    path: "+234 000000000",
+    text: "+234 8130333018",
+    path: "+234 8130333018",
     icon: <Phone size={16} className="mr-2" />,
   },
   {

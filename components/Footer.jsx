@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="text-white px-6 md:px-mid bg-[#E63946] py-mid">
+    <div className="text-white px-6 md:px-mid bg-secondary py-mid">
       <div className="">
         <div className="flex text-[18px] md:px-20 flex-col py-8 ">
           <div className="md:flex justify-between ">
@@ -69,9 +69,9 @@ const Footer = () => {
       <hr />
       <div className="flex flex-col md:flex-row md:justify-between items-center p-8 space-y-4 md:space-y-0 ">
         <img
-          src="../images/nav.png"
+          src="../images/footerlogoo.jpg"
           alt=""
-          className="w-[80px] h-[100px] md:w-[100px] md:h-[150px]"
+          className="w-[130.03px] h-[100.43px]"
         />
         <div className="flex gap-4 ">
           <span className="text-sm">Terms</span>

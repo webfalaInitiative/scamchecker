@@ -116,18 +116,21 @@ const CheckURL = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <div className="relative">
-              <input
+              <textarea
                 type="text"
+                cols={100}
+                rows={5}
                 value={url}
                 onChange={handleInputChange}
                 placeholder="Enter a URL to analyze (e.g., example.com)"
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent ${
+                className={`w-full px-4 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:border-transparent ${
                   isValid
                     ? "border-green-300 focus:ring-green-500"
                     : "border-gray-300 focus:ring-blue-500"
                 }`}
                 style={{ minWidth: "0" }} // Ensures it shrinks with smaller screens
-              />
+              >
+              </textarea>
               {url && (
                 <div className="absolute right-3 top-2.5">
                   {isValid ? (
