@@ -80,6 +80,7 @@ const CheckURL = () => {
           <div className="flex justify-center items-center">
             <button
               type="submit"
+              onClick={handleSubmit}
               className="bg-[#1B263B] text-white h-14 w-40 rounded-md hover:bg-[#1B263B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               disabled={state.isLoading}
             >

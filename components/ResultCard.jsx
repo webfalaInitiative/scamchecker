@@ -2,9 +2,19 @@
 import React from "react";
 import { ShieldCheck, ShieldAlert } from "lucide-react";
 
+// const ResultCard = ({ result }) => {
+//   const isSafe = result?.predicted_label?.toLowerCase() === "good"; // Use optional chaining
+//   const confidenceScore = result?.confidence_score ? result.confidence_score.toFixed(2) : "N/A";
+  // const isSafe = result.predicted_label.toLowerCase() === "good";
+  // const confidenceScore = result.confidence_score.toFixed(2);
+
 const ResultCard = ({ result }) => {
-  const isSafe = result.predicted_label.toLowerCase() === "good"; 
-  const confidenceScore = result.confidence_score.toFixed(2); 
+  if (!result) return null; // Handle case where result is undefined
+
+  const isSafe = result.predicted_label?.toLowerCase() === "good";
+  const confidenceScore = result.confidence_score ? result.confidence_score.toFixed(2) : "N/A";
+  const length = result.length || "N/A";
+  const numDigits = result.num_digits || "N/A";
 
   return (
     <div
@@ -22,34 +32,41 @@ const ResultCard = ({ result }) => {
           {isSafe ? "Safe" : "Potentially Unsafe"}
         </h2>
       </div>
-
-      {/* URL Section */}
-      <p className="text-gray-700 mb-2">
-        <span className="font-semibold">URL:</span> {result.url}
-      </p>
-
-      {/* Risk Score */}
-      <div className="mt-4">
-        <p className="font-semibold">Risk Score:</p>
-        <div className="w-full bg-gray-200 rounded-full h-2.5">
-          <div
-            className={`h-2.5 rounded-full ${
-              isSafe ? "bg-green-500" : "bg-red-500"
-            }`}
-            style={{ width: `${confidenceScore}%` }}
-          ></div>
-        </div>
-        <p className="text-right text-sm text-gray-600 mt-1">
-          {confidenceScore}%
-        </p>
-      </div>
+      {result ? (
+        <>
+          <p className="text-gray-700 mb-2">
+            <span className="font-semibold">Predicted Label:</span>{" "}
+            {result.predicted_label}
+          </p>
+          <div className="mt-4">
+            <p className="text-sm text-gray-600 mb-1">Confidence Score</p>
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+              <div
+                className={`h-2.5 rounded-full ${
+                  isSafe ? "bg-green-500" : "bg-red-500"
+                }`}
+                style={{ width: `${confidenceScore}%` }}
+              ></div>
+            </div>
+            <p className="text-right text-sm text-gray-600 mt-1">
+              {confidenceScore}%
+            </p>
+          </div>
+        </>
+      ) : (
+        <p className="text-gray-700">No result data available.</p>
+      )}
 
       {/* Display Additional Features */}
       <div className="mt-6">
         <h3 className="font-semibold text-lg mb-2">Features</h3>
         <ul className="text-gray-700 space-y-1">
-          <li>Length: {result.length}</li>
-          <li>Number of Digits: {result.num_digits}</li>
+          <li>
+            <strong>Length:</strong> {length}
+          </li>
+          <li>
+            <strong>Number of Digits:</strong> {numDigits}
+          </li>
           <li>Number of Special Characters: {result.num_special_chars}</li>
           <li>Is Trusted Domain: {result.is_trusted_domain ? "Yes" : "No"}</li>
           <li>Suspicious Patterns Count: {result.suspicious_patterns_count}</li>
