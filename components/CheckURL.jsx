@@ -12,7 +12,7 @@ const CheckURL = () => {
   
   const validateURL = (input) => {
     try {
-      // Updated URL structure check with domain extensions
+      
       const urlPattern = new RegExp(
         "^(https?:\\/\\/)?" + // protocol
           "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name

@@ -104,7 +104,7 @@ const Header = () => {
       <div
         className={`flex gap-3 md:flex-row flex-col ${
           showNav
-            ? "absolute top-5 left-0 bg-[#E63946] text-white w-full p-6"
+            ? "absolute top-5 left-0 bg-secondary text-white w-full p-6"
             : "hidden md:flex"
         }`}
       >
