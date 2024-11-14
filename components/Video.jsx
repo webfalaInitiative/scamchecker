@@ -29,7 +29,7 @@ const VideoPlayer = () => {
           controls
           onPause={() => setIsPlaying(false)}
         >
-          <source src="../video/Linkguard.mp4" type="video/mp4" />
+          <source src="../video/linkguardvideo.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       )}
