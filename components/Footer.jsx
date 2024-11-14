@@ -5,12 +5,12 @@ import { Link, NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="text-white px-6 md:px-mid bg-secondary py-mid">
-      <div className="">
-        <div className="flex text-[18px] md:px-20 flex-col py-8 ">
-          <div className="md:flex justify-between ">
+    <div className="text-white px-6 md:px-mid lg:px-12 bg-secondary py-mid">
+      <div>
+        <div className="flex text-[18px] md:px-20 lg:px-0 flex-col py-8">
+          <div className="md:flex lg:justify-between">
             <div className="flex flex-col gap-3 mb-3">
-              <h1 className="font-bold text-lg ">QuickLinks</h1>
+              <h1 className="font-bold text-lg">QuickLinks</h1>
               {pageLinks.map((link) => (
                 <NavLink
                   className="whitespace-nowrap"
@@ -22,7 +22,7 @@ const Footer = () => {
               ))}
             </div>
             <div className="flex flex-col gap-3">
-              <h1 className="font-bold text-lg ">Legal Info</h1>
+              <h1 className="font-bold text-lg">Legal Info</h1>
               {materials.map((material) => (
                 <Link
                   className="whitespace-nowrap"
@@ -34,7 +34,7 @@ const Footer = () => {
               ))}
             </div>
             <div className="flex flex-col gap-3">
-              <h1 className="font-bold text-lg ">Contact Info</h1>
+              <h1 className="font-bold text-lg">Contact Info</h1>
               {informations.map((information) => (
                 <Link
                   className="whitespace-nowrap flex items-center gap-2"
@@ -67,13 +67,13 @@ const Footer = () => {
         </div>
       </div>
       <hr />
-      <div className="flex flex-col md:flex-row md:justify-between items-center p-8 space-y-4 md:space-y-0 ">
+      <div className="flex flex-col md:flex-row md:justify-between items-center p-8 space-y-4 md:space-y-0">
         <img
           src="../images/logofooter.jpg"
           alt=""
           className="w-[130.03px] h-[100.43px]"
         />
-        <div className="flex gap-4 ">
+        <div className="flex gap-4">
           <span className="text-sm">Terms</span>
           <span className="text-sm">Privacy</span>
           <span>
