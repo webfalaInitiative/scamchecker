@@ -76,8 +76,8 @@ export const materials = [
 export const informations = [
   {
     id: 1,
-    text: "webfalainitiative@gmail.com",
-    path: "webfalainitiative@gmail.com",
+    text: "linkguard1@gmail.com",
+    path: "linkguard1@gmail.com",
     icon: <Mail size={16} className="mr-2" />,
   },
   {
