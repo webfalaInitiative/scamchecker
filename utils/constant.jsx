@@ -13,7 +13,7 @@ export const HeaderNav = [
   {
     id: 3,
     name: "Blog",
-    path: "blog",
+    path: "https://blog.thelinkguard.com",
   },
   {
     id: 4,
