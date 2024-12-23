@@ -12,7 +12,7 @@ export const HeaderNav = [
   },
   {
     id: 3,
-    name: "FactCheck Link",
+    name: "FactCheck",
     path: "https://blog.thelinkguard.com",
   },
   {
