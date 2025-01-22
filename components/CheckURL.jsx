@@ -124,7 +124,7 @@ const CheckURL = () => {
                 rows={5}
                 value={url}
                 onChange={handleInputChange}
-                placeholder="Enter a URL to analyze (e.g., example.com)"
+                placeholder="Adding https:// to ensure proper analysis"
                 className={`w-full px-4 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:border-transparent ${
                   isValid
                     ? "border-green-300 focus:ring-green-500"
