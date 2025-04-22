@@ -42,12 +42,12 @@ const CheckURL = () => {
       }
 
       // Add "https://" if missing to ensure proper analysis
-      if (!input.startsWith("http://") && !input.startsWith("https://")) {
-        setValidationMessage('Adding "https://" to ensure proper analysis');
-        input = "https://" + input;
-      } else {
-        setValidationMessage("URL format is valid");
-      }
+      // if (!input.startsWith("http://") && !input.startsWith("https://")) {
+      //   setValidationMessage('Adding "https://" to ensure proper analysis');
+      //   input = "https://" + input;
+      // } else {
+      //   setValidationMessage("URL format is valid");
+      // }
 
       setIsValid(true);
       return true;
@@ -133,7 +133,7 @@ const CheckURL = () => {
                 rows={5}
                 value={url}
                 onChange={handleInputChange}
-                placeholder="Adding https:// to ensure proper analysis"
+                placeholder="Enter URL"
                 className={`w-full px-4 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:border-transparent ${
                   isValid
                     ? "border-green-300 focus:ring-green-500"
