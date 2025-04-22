@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
-import { AlertCircle, CheckCircle, Shield, X, AlertTriangle } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  AlertCircle,
+  CheckCircle,
+  Shield,
+  X,
+  AlertTriangle,
+} from "lucide-react";
 
 const CheckURL = () => {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [validationMessage, setValidationMessage] = useState('');
+  const [validationMessage, setValidationMessage] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const[isVisible, setIsVisible] = useState(false);
 
-  
   const validateURL = (input) => {
     try {
-      
       const flexibleUrlPattern = new RegExp(
         "^(https?:\\/\\/)?" + // protocol
-          "(([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name 
+          "(([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
           "((\\d{1,3}\\.){3}\\d{1,3})" + // OR IP (v4) address
           "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // optional port and path
           "(\\?[;&a-z\\d%_.~+=-]*)?" + // optional query string
@@ -61,7 +66,7 @@ const CheckURL = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateURL(url)) {
       return;
     }
@@ -70,17 +75,21 @@ const CheckURL = () => {
     setError(null);
 
     try {
-      const finalUrl = (!url.startsWith('http://') && !url.startsWith('https://')) 
-        ? `https://${url}` 
-        : url;
+      const finalUrl =
+        !url.startsWith("http://") && !url.startsWith("https://")
+          ? `https://${url}`
+          : url;
 
-      const response = await fetch('https://phishing-url-detection-api-with-enhanced.onrender.com/analyze', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url: finalUrl }),
-      });
+      const response = await fetch(
+        "https://phishing-url-detection-api-with-enhanced.onrender.com/analyze",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: finalUrl }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -99,9 +108,9 @@ const CheckURL = () => {
 
   const getRiskColor = (score) => {
     const percentage = parseFloat(score);
-    if (percentage < 30) return 'text-green-500';
-    if (percentage < 70) return 'text-yellow-500';
-    return 'text-red-500';
+    if (percentage > 50) return "text-green-500";
+    if (percentage >= 30 && percentage < 50) return "text-yellow-500";
+    return "text-red-500";
   };
 
   return (
@@ -180,7 +189,7 @@ const CheckURL = () => {
           {/* Main Results Card */}
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
             <h2 className="text-xl sm:text-lg font-bold text-gray-800 mb-4">
-              Analysis Results
+              Analysis Results: This URL is {result.label}
             </h2>
 
             <div className="space-y-4">
@@ -192,13 +201,13 @@ const CheckURL = () => {
               </div>
 
               <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
-                <span className="font-medium text-gray-700">Risk Score:</span>
+                <span className="font-medium text-gray-700">Safety Score:</span>
                 <span
                   className={`text-2xl font-bold ${getRiskColor(
-                    result.risk_score
+                    result.safety_score
                   )}`}
                 >
-                  {result.risk_score}
+                  {result.safety_score}
                 </span>
               </div>
 
@@ -208,49 +217,59 @@ const CheckURL = () => {
                 </span>
                 <span
                   className={`px-4 py-1 rounded-full font-medium ${
-                    result.risk_classification === "good"
+                    result.label === "Safe"
                       ? "bg-green-100 text-green-800"
                       : "bg-red-100 text-red-800"
                   }`}
                 >
-                  {result.risk_classification.charAt(0).toUpperCase() +
-                    result.risk_classification.slice(1)}
+                  {result.label.charAt(0).toUpperCase() + result.label.slice(1)}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Features Card */}
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
-            <h2 className="text-xl sm:text-lg font-bold text-gray-800 mb-4">
-              Detailed Features
-            </h2>
+          
+          <div className="p-4 max-w-3xl mx-auto">
+            <button
+              onClick={() => setIsVisible(!isVisible)}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            >
+              {isVisible ? "Hide Features" : "Show Features"}
+            </button>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Object.entries(result.features).map(([key, value]) => (
-                <div
-                  key={key}
-                  className="bg-gray-50 p-3 rounded-lg flex items-center justify-between"
-                >
-                  <span className="font-medium text-gray-700 capitalize">
-                    {key.replace(/_/g, " ")}:
-                  </span>
-                  <span className="flex items-center gap-2">
-                    {typeof value === "boolean" ? (
-                      value ? (
-                        <CheckCircle className="h-5 w-5 text-green-500" />
-                      ) : (
-                        <X className="h-5 w-5 text-red-500" />
-                      )
-                    ) : (
-                      <span className="font-mono text-gray-600 truncate">
-                        {value}
+            {isVisible && (
+              <div className="mt-4 bg-white rounded-lg shadow-lg p-6 sm:p-4">
+                <h2 className="text-xl sm:text-lg font-bold text-gray-800 mb-4">
+                  Detailed Features
+                </h2>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {Object.entries(result.url_info).map(([key, value]) => (
+                    <div
+                      key={key}
+                      className="bg-gray-50 p-3 rounded-lg flex items-center justify-between"
+                    >
+                      <span className="font-medium text-gray-700 capitalize">
+                        {key.replace(/_/g, " ")}:
                       </span>
-                    )}
-                  </span>
+                      <span className="flex items-center gap-2">
+                        {typeof value === "boolean" ? (
+                          value ? (
+                            <CheckCircle className="h-5 w-5 text-green-500" />
+                          ) : (
+                            <X className="h-5 w-5 text-red-500" />
+                          )
+                        ) : (
+                          <span className="font-mono text-gray-600 truncate">
+                            {value}
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}
