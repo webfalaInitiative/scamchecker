@@ -32,6 +32,7 @@ const ResultCard = ({ result }) => {
           <p className="text-gray-700 mb-2">
             <span className="font-semibold">Predicted Label:</span>{" "}
             {result.predicted_label}
+            
           </p>
           <div className="mt-4">
             <p className="text-sm text-gray-600 mb-1">Confidence Score</p>
