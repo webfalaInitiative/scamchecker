@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
 import {
   AlertCircle,
   CheckCircle,
   Shield,
   X,
   AlertTriangle,
+  ThumbsDown,
 } from "lucide-react";
 
 const CheckURL = () => {
@@ -14,17 +16,18 @@ const CheckURL = () => {
   const [loading, setLoading] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
   const [isValid, setIsValid] = useState(false);
-  const[isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasGivenThumbsDown, setHasGivenThumbsDown] = useState(false);
 
   const validateURL = (input) => {
     try {
       const flexibleUrlPattern = new RegExp(
-        "^(https?:\\/\\/)?" + // protocol
-          "(([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-          "((\\d{1,3}\\.){3}\\d{1,3})" + // OR IP (v4) address
-          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // optional port and path
-          "(\\?[;&a-z\\d%_.~+=-]*)?" + // optional query string
-          "(\\#[-a-z\\d_]*)?$", // optional fragment locator
+        "^(https?:\\/\\/)?" +
+          "(([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+          "((\\d{1,3}\\.){3}\\d{1,3})" +
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+          "(\\?[;&a-z\\d%_.~+=-]*)?" +
+          "(\\#[-a-z\\d_]*)?$",
         "i"
       );
 
@@ -34,20 +37,11 @@ const CheckURL = () => {
         return false;
       }
 
-      // Check URL against flexible pattern
       if (!flexibleUrlPattern.test(input)) {
         setValidationMessage("Please enter a valid URL format.");
         setIsValid(false);
         return false;
       }
-
-      // Add "https://" if missing to ensure proper analysis
-      // if (!input.startsWith("http://") && !input.startsWith("https://")) {
-      //   setValidationMessage('Adding "https://" to ensure proper analysis');
-      //   input = "https://" + input;
-      // } else {
-      //   setValidationMessage("URL format is valid");
-      // }
 
       setIsValid(true);
       return true;
@@ -55,6 +49,22 @@ const CheckURL = () => {
       setValidationMessage("Invalid URL format");
       setIsValid(false);
       return false;
+    }
+  };
+
+  const handleThumbsDown = async (prediction_id) => {
+    if (!hasGivenThumbsDown) {
+  const response = await fetch(
+          `https://phishing-url-detection-api-with-enhanced.onrender.com/feedback/${prediction_id}`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ feedback: 'incorrect' }),
+          }
+        );
+        console.log(response)
+      setHasGivenThumbsDown(true);
+      // Optionally send feedback to server here
     }
   };
 
@@ -67,12 +77,11 @@ const CheckURL = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateURL(url)) {
-      return;
-    }
+    if (!validateURL(url)) return;
 
     setLoading(true);
     setError(null);
+    setHasGivenThumbsDown(false); // Reset thumbs down on new check
 
     try {
       const finalUrl =
@@ -84,9 +93,7 @@ const CheckURL = () => {
         "https://phishing-url-detection-api-with-enhanced.onrender.com/analyze",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ url: finalUrl }),
         }
       );
@@ -115,11 +122,10 @@ const CheckURL = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-6">
-      {/* Main Card */}
       <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-6">
           <Shield className="h-6 w-6 text-blue-600" />
-          <h1 className="text-2xl sm:text-xl  font-bold text-gray-800">
+          <h1 className="text-2xl sm:text-xl font-bold text-gray-800">
             URL Safety Checker
           </h1>
         </div>
@@ -139,7 +145,7 @@ const CheckURL = () => {
                     ? "border-green-300 focus:ring-green-500"
                     : "border-gray-300 focus:ring-blue-500"
                 }`}
-                style={{ minWidth: "0" }} // Ensures it shrinks with smaller screens
+                style={{ minWidth: "0" }}
               ></textarea>
               {url && (
                 <div className="absolute right-3 top-2.5">
@@ -152,7 +158,6 @@ const CheckURL = () => {
               )}
             </div>
 
-            {/* Validation Message */}
             {validationMessage && (
               <div
                 className={`flex items-center gap-2 text-sm ${
@@ -181,16 +186,43 @@ const CheckURL = () => {
             {loading ? "Analyzing..." : "Check URL"}
           </button>
         </form>
+       
       </div>
 
-      {/* Results */}
       {result && (
         <div className="space-y-6">
-          {/* Main Results Card */}
           <div className="bg-white rounded-lg shadow-lg p-6 sm:p-4">
-            <h2 className="text-xl sm:text-lg font-bold text-gray-800 mb-4">
-              Analysis Results: This URL is {result.label}
-            </h2>
+            <div className="flex justify-between items-center p-8">
+              <h2 className="text-xl sm:text-lg font-bold text-gray-800">
+                Analysis Results: This URL is {result?.label}
+              </h2>
+
+              <div className="relative group">
+                <button
+                  onClick={() => handleThumbsDown(result?.prediction_id)}
+                  disabled={hasGivenThumbsDown}
+                  className={`ml-2 p-1 rounded-full transition ${
+                    hasGivenThumbsDown
+                      ? "bg-red-100 cursor-not-allowed"
+                      : "hover:bg-gray-100 cursor-pointer"
+                  }`}
+                  aria-label="Thumbs down feedback"
+                >
+                  <ThumbsDown
+                    className={`h-5 w-5 ${
+                      hasGivenThumbsDown ? "text-red-600" : "text-gray-500"
+                    }`}
+                  />
+                </button>
+
+                {/* Tooltip */}
+                <div className="absolute top-full mb-2 left-1/3 transform -translate-x-1/2 px-2 py-1 text-base text-white bg-blue-500 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  Bad response
+                </div>
+
+              </div>
+
+            </div>
 
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
@@ -212,9 +244,7 @@ const CheckURL = () => {
               </div>
 
               <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
-                <span className="font-medium text-gray-700">
-                  Classification:
-                </span>
+                <span className="font-medium text-gray-700">Classification:</span>
                 <span
                   className={`px-4 py-1 rounded-full font-medium ${
                     result.label === "Safe"
@@ -222,13 +252,13 @@ const CheckURL = () => {
                       : "bg-red-100 text-red-800"
                   }`}
                 >
-                  {result.label.charAt(0).toUpperCase() + result.label.slice(1)}
+                  {result.label.charAt(0).toUpperCase() +
+                    result.label.slice(1)}
                 </span>
               </div>
             </div>
           </div>
 
-          
           <div className="p-4 max-w-3xl mx-auto">
             <button
               onClick={() => setIsVisible(!isVisible)}
