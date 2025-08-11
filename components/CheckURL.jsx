@@ -54,17 +54,16 @@ const CheckURL = () => {
 
   const handleThumbsDown = async (prediction_id) => {
     if (!hasGivenThumbsDown) {
-  const response = await fetch(
-          `https://phishing-url-detection-api-with-enhanced.onrender.com/feedback/${prediction_id}`,
-          {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ feedback: 'incorrect' }),
-          }
-        );
-        console.log(response)
+      const response = await fetch(
+        `https://phishing-url-detection-api-with-enhanced.onrender.com/feedback/${prediction_id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ feedback: "incorrect" }),
+        }
+      );
+      console.log(response);
       setHasGivenThumbsDown(true);
-      // Optionally send feedback to server here
     }
   };
 
@@ -81,7 +80,7 @@ const CheckURL = () => {
 
     setLoading(true);
     setError(null);
-    setHasGivenThumbsDown(false); // Reset thumbs down on new check
+    setHasGivenThumbsDown(false);
 
     try {
       const finalUrl =
@@ -116,7 +115,6 @@ const CheckURL = () => {
   const getRiskColor = (score) => {
     const percentage = parseFloat(score);
     if (percentage > 50) return "text-green-500";
-    if (percentage >= 30 && percentage < 50) return "text-yellow-500";
     return "text-red-500";
   };
 
@@ -186,7 +184,6 @@ const CheckURL = () => {
             {loading ? "Analyzing..." : "Check URL"}
           </button>
         </form>
-       
       </div>
 
       {result && (
@@ -215,20 +212,28 @@ const CheckURL = () => {
                   />
                 </button>
 
-                {/* Tooltip */}
                 <div className="absolute top-full mb-2 left-1/3 transform -translate-x-1/2 px-2 py-1 text-base text-white bg-blue-500 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                   Bad response
                 </div>
-
               </div>
-
             </div>
 
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between">
                 <span className="font-medium text-gray-700">Analyzed URL:</span>
                 <span className="font-mono text-gray-600 truncate overflow-hidden w-48 sm:w-auto">
-                  {result.url}
+                  {result.label === "Safe" ? (
+                    <a
+                      href={result.url.startsWith("http") ? result.url : `https://${result.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      {result.url}
+                    </a>
+                  ) : (
+                    result.url
+                  )}
                 </span>
               </div>
 
