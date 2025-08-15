@@ -16,7 +16,7 @@ const Contact = () => {
               <p className="text-xl font-bold text-white">Address</p>
             </div>
             <p className="text-white ml-8 md:ml-10 text-lg">
-              12, Station Road, GRA, Ilorin
+              4, Abidoye Lane, GRA, Ilorin, Kwara State, Nigeria.
             </p>
           </li>
           <li className="flex flex-col gap-3">
