@@ -88,7 +88,7 @@ export const informations = [
   },
   {
     id: 3,
-    text: "12, Station Road, G.R.A, Ilorin.",
+    text: "4, Abidoye Lane, GRA, Ilorin, Kwara State, Nigeria.",
     path: "address",
     icon: <MapPin size={16} className="mr-2" />,
   },
