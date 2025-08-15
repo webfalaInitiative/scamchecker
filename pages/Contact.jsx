@@ -32,7 +32,7 @@ const Contact = () => {
               <p className="text-lg font-semibold text-white">Email Address</p>
             </div>
             <p className="text-white ml-8 md:ml-10 text-lg">
-              webfalainitiative@gmail.com
+              linkguard1@gmail.com
             </p>
           </li>
         </ul>
