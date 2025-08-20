@@ -1,5 +1,5 @@
 import React from "react";
-import {  informations, materials, pageLinks } from "../utils/constant";
+import { informations, materials, pageLinks } from "../utils/constant";
 import { Link, NavLink } from "react-router-dom";
 
 
@@ -37,15 +37,16 @@ const Footer = () => {
               <h1 className="font-bold text-lg">Contact Info</h1>
               {informations.map((information) => (
                 <Link
-                  className="whitespace-nowrap flex items-center gap-2"
+                  className="flex items-center gap-2 whitespace-normal sm:whitespace-nowrap break-words"
                   key={information.id}
                   to={information.path}
                 >
                   {information.icon}
-                  {information.text}
+                  <span className="break-words">{information.text}</span>
                 </Link>
               ))}
             </div>
+
             <div className="md:flex flex-col gap-6">
               <h1 className="font-bold text-lg mb-2">Subscribe</h1>
               <form
